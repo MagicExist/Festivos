@@ -1,0 +1,6 @@
+@Festivos_HostAddress = http://localhost:5027
+
+GET {{Festivos_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
