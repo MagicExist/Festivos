@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Festivos", "Festivos\Festivos.csproj", "{8FF97C9B-E1F1-46D2-B4F0-49CD955A3863}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Festivos.API", "Festivos\Festivos.API.csproj", "{8FF97C9B-E1F1-46D2-B4F0-49CD955A3863}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{D1E534C9-20B0-4FA0-A4FF-B9943D7838B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{FC4D34EB-E9CB-4780-AAFE-ED40263DB1F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Festivos.Persistence", "Festivos.Persistence\Festivos.Persistence.csproj", "{BA1CA3DF-514B-40A7-B19F-29A0461F1D8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Festivos.Domain", "Festivos.Domain\Festivos.Domain.csproj", "{E04957DA-2B1D-41BA-A96B-96FF91E69025}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Festivos.Application", "Festivos.Application\Festivos.Application.csproj", "{BD1DBC5D-FB63-4993-BFAC-62C67129C293}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +25,27 @@ Global
 		{8FF97C9B-E1F1-46D2-B4F0-49CD955A3863}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FF97C9B-E1F1-46D2-B4F0-49CD955A3863}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FF97C9B-E1F1-46D2-B4F0-49CD955A3863}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA1CA3DF-514B-40A7-B19F-29A0461F1D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA1CA3DF-514B-40A7-B19F-29A0461F1D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA1CA3DF-514B-40A7-B19F-29A0461F1D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA1CA3DF-514B-40A7-B19F-29A0461F1D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E04957DA-2B1D-41BA-A96B-96FF91E69025}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E04957DA-2B1D-41BA-A96B-96FF91E69025}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E04957DA-2B1D-41BA-A96B-96FF91E69025}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E04957DA-2B1D-41BA-A96B-96FF91E69025}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD1DBC5D-FB63-4993-BFAC-62C67129C293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD1DBC5D-FB63-4993-BFAC-62C67129C293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD1DBC5D-FB63-4993-BFAC-62C67129C293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD1DBC5D-FB63-4993-BFAC-62C67129C293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8FF97C9B-E1F1-46D2-B4F0-49CD955A3863} = {FC4D34EB-E9CB-4780-AAFE-ED40263DB1F2}
+		{BA1CA3DF-514B-40A7-B19F-29A0461F1D8F} = {FC4D34EB-E9CB-4780-AAFE-ED40263DB1F2}
+		{E04957DA-2B1D-41BA-A96B-96FF91E69025} = {D1E534C9-20B0-4FA0-A4FF-B9943D7838B5}
+		{BD1DBC5D-FB63-4993-BFAC-62C67129C293} = {D1E534C9-20B0-4FA0-A4FF-B9943D7838B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {516096A5-CC79-44D7-A86F-9EADDFA31CF8}
