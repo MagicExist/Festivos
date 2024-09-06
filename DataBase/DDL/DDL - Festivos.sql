@@ -39,6 +39,8 @@ IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.COLUMNS
 ELSE
 	PRINT 'Ya existe la tabla [Festivo]'
 
+
+-- Get SundayPascua Date
 GO
 CREATE PROC SundayPascua
 	@Year INT,
@@ -62,4 +64,18 @@ BEGIN
 
 	SET @PASCUADATE = CAST(@Year AS VARCHAR(4)) + '-03-' + RIGHT('00' + CAST(@RESULT AS VARCHAR(2)), 2);
 	SET @PASCUADATE = DATEADD(DAY,7,@PascuaDate);
+END
+
+--Move date to the next monday
+GO
+CREATE PROCEDURE ObtenerProximoLunes
+    @fecha DATE
+AS
+BEGIN
+    -- Calcular el número de días hasta el próximo lunes
+    SELECT DATEADD(DAY, CASE 
+                           WHEN (9- DATEPART(WEEKDAY, @fecha)) % 7 = 0 
+                           THEN 7 
+                           ELSE (9 - DATEPART(WEEKDAY, @fecha)) % 7 
+                        END, @fecha) AS FechaProximoLunes;
 END
