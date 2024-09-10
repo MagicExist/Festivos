@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Festivos.Application\Festivos.Application.csproj" />
     <ProjectReference Include="..\Festivos.Domain\Festivos.Domain.csproj" />
   </ItemGroup>
 

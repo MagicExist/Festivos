@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Festivos.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Festivos.API.Models;

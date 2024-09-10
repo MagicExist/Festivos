@@ -8,6 +8,6 @@ namespace Festivos.Domain.Repository
 {
     public interface IFestivoRepository
     {
-        public Task<string> IsHoliday(int year, int month, int day);
+        public Task<bool> IsHoliday(DateTime date);
     }
 }

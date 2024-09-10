@@ -41,29 +41,47 @@ ELSE
 
 
 -- Get SundayPascua Date
-GO
 CREATE PROC SundayPascua
-	@Year INT,
-	@PASCUADATE DATE OUTPUT
+    @Year INT,
+    @PASCUADATE DATE OUTPUT
 AS
 BEGIN
-	DECLARE @A INT;
-	DECLARE @B INT;
-	DECLARE @C INT;
-	DECLARE @D INT;
-	DECLARE @RESULT INT;
+    DECLARE @A INT;
+    DECLARE @B INT;
+    DECLARE @C INT;
+    DECLARE @D INT;
+    DECLARE @RESULT INT;
 
-	
+    -- Cálculos
+    SET @A = @Year % 19;
+    SET @B = @Year % 4;
+    SET @C = @Year % 7;
+    SET @D = (19 * @A + 24) % 30;
+    
+    -- Calcular el número de días para el día de Pascua
+    SET @RESULT = 15 + (@D + (2 * @B + 4 * @C + 6 * @D + 5) % 7);
 
-	SET @A = @Year % 19;
-	SET @B = @Year % 4;
-	SET @C = @Year % 7;
-	SET @D = (19*@A+24) % 30
+    -- Asegúrate de que el día es válido
+    IF @RESULT <= 31
+    BEGIN
+        -- Si el resultado está en marzo
+        SET @PASCUADATE = DATEFROMPARTS(@Year, 3, @RESULT);
+    END
+    ELSE
+    BEGIN
+        -- Si el resultado está en abril
+        SET @PASCUADATE = DATEFROMPARTS(@Year, 4, @RESULT - 31);
+    END
+    
+    -- Ajusta al siguiente domingo (siete días después)
+    SET @PASCUADATE = DATEADD(DAY, 7, @PASCUADATE);
+END
 
-	SET @RESULT = 15 + (@D + (2*@B+4*@C+6*@D+5) % 7) 
+GO
+declare @pascuadate date;
+exec SundayPascua 2023,@pascuadate output
+select @pascuadate
 
-	SET @PASCUADATE = CAST(@Year AS VARCHAR(4)) + '-03-' + RIGHT('00' + CAST(@RESULT AS VARCHAR(2)), 2);
-	SET @PASCUADATE = DATEADD(DAY,7,@PascuaDate);
 END
 
 --Move date to the next monday
