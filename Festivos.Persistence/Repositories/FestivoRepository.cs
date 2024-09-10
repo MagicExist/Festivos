@@ -64,7 +64,7 @@ namespace Festivos.Persistence.Repositories
                         pascuaDate = pascuaDate.AddDays(holiDay.DiasPascua);
 
 
-                        dateResult = dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx, date);
+                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx, date);
                         if (dateResult != null)
                         {
                             holiDay.Dia = dateResult.NextMondayDate.Day;
