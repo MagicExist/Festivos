@@ -4,6 +4,7 @@ using Festivos.Domain.Enum;
 using Festivos.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using Festivos.Persistence.DbHandlers;
 namespace Festivos.Persistence.Repositories
 {
     public class FestivoRepository : IFestivoRepository
@@ -17,8 +18,6 @@ namespace Festivos.Persistence.Repositories
         public async Task<bool> IsHoliday(DateTime date)
         {
             _list = _ctx.Festivos.ToArray();
-            SqlParameter? outputParam;
-            SqlParameter? yearParam;
             DateTime pascuaDate;
             NextMondayDto? dateResult;
 
@@ -30,46 +29,23 @@ namespace Festivos.Persistence.Repositories
                 {
                     case HoliDayEnum.Fijo:break;
                     case HoliDayEnum.Bridge:
-                        dateResult = _ctx.Database
-                        .SqlQueryRaw<NextMondayDto>("EXEC ObtenerProximoLunes @p0", new SqlParameter("@p0", date))
-                        .AsEnumerable()
-                        .FirstOrDefault();
+                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx,date);
                         if (dateResult != null)
                         {
                             holiDay.Dia = dateResult.NextMondayDate.Day;
                             holiDay.Mes = dateResult.NextMondayDate.Month;
                         }
-                        
                         break;
                     case HoliDayEnum.PascuaSunday:
-                        outputParam = new SqlParameter("@PASCUADATE", System.Data.SqlDbType.Date)
-                        {
-                            Direction = System.Data.ParameterDirection.Output
-                        };
-                        yearParam = new SqlParameter("@Year", date.Year);
-                        _ctx.Database.ExecuteSqlRaw("EXEC SundayPascua @Year, @PASCUADATE OUTPUT",
-                                         yearParam, outputParam);
-                        pascuaDate = (DateTime)outputParam.Value;
-                        pascuaDate = pascuaDate.AddDays(holiDay.DiasPascua);
+                        pascuaDate = HolidayStoredProceduresHandler.GetDateByPascuaSunday(_ctx, date, holiDay);
                         holiDay.Dia = pascuaDate.Day;
                         holiDay.Mes = pascuaDate.Month;
                         break;
                     case HoliDayEnum.PascuaSundayBridge:
-                        outputParam = new SqlParameter("@PASCUADATE", System.Data.SqlDbType.Date)
-                        {
-                            Direction = System.Data.ParameterDirection.Output
-                        };
-                        yearParam = new SqlParameter("@Year", date.Year);
-                        _ctx.Database.ExecuteSqlRaw("EXEC SundayPascua @Year, @PASCUADATE OUTPUT",
-                                         yearParam, outputParam);
-                        pascuaDate = (DateTime)outputParam.Value;
-                        pascuaDate = pascuaDate.AddDays(holiDay.DiasPascua);
 
+                        pascuaDate = HolidayStoredProceduresHandler.GetDateByPascuaSunday(_ctx,date,holiDay);
 
-                        dateResult = _ctx.Database
-                            .SqlQueryRaw<NextMondayDto>("EXEC ObtenerProximoLunes @p0", new SqlParameter("@p0", pascuaDate))
-                            .AsEnumerable()
-                            .FirstOrDefault();
+                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx, pascuaDate);
                         if (dateResult != null)
                         {
                             holiDay.Dia = dateResult.NextMondayDate.Day;
