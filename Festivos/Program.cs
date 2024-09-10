@@ -1,8 +1,6 @@
-using Festivos.API.Models;
+using Festivos.Application.Extentions;
 using Festivos.Application.Services;
-using Festivos.Domain.Repository;
-using Festivos.Persistence.Repositories;
-using Microsoft.EntityFrameworkCore;
+using Festivos.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,13 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddScoped<IFestivoRepository, FestivoRepository>();
+builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 builder.Services.AddScoped<FestivosService>();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<FestivosContext>(opt =>
-{
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
-});
 
 var app = builder.Build();
 
