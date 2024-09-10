@@ -4,6 +4,7 @@ using Festivos.Domain.Enum;
 using Festivos.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
+using Festivos.Persistence.DbHandlers;
 namespace Festivos.Persistence.Repositories
 {
     public class FestivoRepository : IFestivoRepository
@@ -30,10 +31,7 @@ namespace Festivos.Persistence.Repositories
                 {
                     case HoliDayEnum.Fijo:break;
                     case HoliDayEnum.Bridge:
-                        dateResult = _ctx.Database
-                        .SqlQueryRaw<NextMondayDto>("EXEC ObtenerProximoLunes @p0", new SqlParameter("@p0", date))
-                        .AsEnumerable()
-                        .FirstOrDefault();
+                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx,date);
                         if (dateResult != null)
                         {
                             holiDay.Dia = dateResult.NextMondayDate.Day;
@@ -66,10 +64,7 @@ namespace Festivos.Persistence.Repositories
                         pascuaDate = pascuaDate.AddDays(holiDay.DiasPascua);
 
 
-                        dateResult = _ctx.Database
-                            .SqlQueryRaw<NextMondayDto>("EXEC ObtenerProximoLunes @p0", new SqlParameter("@p0", pascuaDate))
-                            .AsEnumerable()
-                            .FirstOrDefault();
+                        dateResult = dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx, date);
                         if (dateResult != null)
                         {
                             holiDay.Dia = dateResult.NextMondayDate.Day;
