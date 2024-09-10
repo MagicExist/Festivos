@@ -18,8 +18,6 @@ namespace Festivos.Persistence.Repositories
         public async Task<bool> IsHoliday(DateTime date)
         {
             _list = _ctx.Festivos.ToArray();
-            SqlParameter? outputParam;
-            SqlParameter? yearParam;
             DateTime pascuaDate;
             NextMondayDto? dateResult;
 
@@ -37,34 +35,17 @@ namespace Festivos.Persistence.Repositories
                             holiDay.Dia = dateResult.NextMondayDate.Day;
                             holiDay.Mes = dateResult.NextMondayDate.Month;
                         }
-                        
                         break;
                     case HoliDayEnum.PascuaSunday:
-                        outputParam = new SqlParameter("@PASCUADATE", System.Data.SqlDbType.Date)
-                        {
-                            Direction = System.Data.ParameterDirection.Output
-                        };
-                        yearParam = new SqlParameter("@Year", date.Year);
-                        _ctx.Database.ExecuteSqlRaw("EXEC SundayPascua @Year, @PASCUADATE OUTPUT",
-                                         yearParam, outputParam);
-                        pascuaDate = (DateTime)outputParam.Value;
-                        pascuaDate = pascuaDate.AddDays(holiDay.DiasPascua);
+                        pascuaDate = HolidayStoredProceduresHandler.GetDateByPascuaSunday(_ctx, date, holiDay);
                         holiDay.Dia = pascuaDate.Day;
                         holiDay.Mes = pascuaDate.Month;
                         break;
                     case HoliDayEnum.PascuaSundayBridge:
-                        outputParam = new SqlParameter("@PASCUADATE", System.Data.SqlDbType.Date)
-                        {
-                            Direction = System.Data.ParameterDirection.Output
-                        };
-                        yearParam = new SqlParameter("@Year", date.Year);
-                        _ctx.Database.ExecuteSqlRaw("EXEC SundayPascua @Year, @PASCUADATE OUTPUT",
-                                         yearParam, outputParam);
-                        pascuaDate = (DateTime)outputParam.Value;
-                        pascuaDate = pascuaDate.AddDays(holiDay.DiasPascua);
 
+                        pascuaDate = HolidayStoredProceduresHandler.GetDateByPascuaSunday(_ctx,date,holiDay);
 
-                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx, date);
+                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx, pascuaDate);
                         if (dateResult != null)
                         {
                             holiDay.Dia = dateResult.NextMondayDate.Day;
