@@ -17,19 +17,18 @@ namespace Festivos.Persistence.Repositories
         }
         public async Task<bool> IsHoliday(DateTime date)
         {
-            _list = _ctx.Festivos.ToArray();
+            _list = await _ctx.Festivos.ToArrayAsync();
             DateTime pascuaDate;
             NextMondayDto? dateResult;
 
-            Console.WriteLine(date);
-
             foreach (var holiDay in _list) 
             {
+
                 switch ((HoliDayEnum)holiDay.IdTipo)
                 {
                     case HoliDayEnum.Fijo:break;
                     case HoliDayEnum.Bridge:
-                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx,date);
+                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx,date,holiDay);
                         if (dateResult != null)
                         {
                             holiDay.Dia = dateResult.NextMondayDate.Day;
@@ -45,7 +44,7 @@ namespace Festivos.Persistence.Repositories
 
                         pascuaDate = HolidayStoredProceduresHandler.GetDateByPascuaSunday(_ctx,date,holiDay);
 
-                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx, pascuaDate);
+                        dateResult = HolidayStoredProceduresHandler.NextMondayProcedure(_ctx, date,pascuaDate);
                         if (dateResult != null)
                         {
                             holiDay.Dia = dateResult.NextMondayDate.Day;
