@@ -40,6 +40,7 @@ ELSE
 	PRINT 'Ya existe la tabla [Festivo]'
 
 
+GO
 -- Get SundayPascua Date
 CREATE PROC SundayPascua
     @Year INT,
@@ -75,13 +76,6 @@ BEGIN
     
     -- Ajusta al siguiente domingo (siete días después)
     SET @PASCUADATE = DATEADD(DAY, 7, @PASCUADATE);
-END
-
-GO
-declare @pascuadate date;
-exec SundayPascua 2023,@pascuadate output
-select @pascuadate
-
 END
 
 --Move date to the next monday
