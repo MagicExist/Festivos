@@ -14,14 +14,18 @@ namespace Festivos.API.Controllers
         }
 
         [HttpGet]
-        public async Task<String> IsHoliday([FromQuery] DateTime date)
+        public async Task<IActionResult> IsHoliday([FromQuery] string date)
         {
-            var response = await _festivoService.isHoliday(date);
+            if (!DateTime.TryParse(date,out DateTime parsedDate))
+            {
+                return BadRequest("Wrong date format");
+            }
+            var response = await _festivoService.isHoliday(parsedDate);
             if (response)
             {
-                return "Yeah is holiday";
+                return Ok("Yeah Is Holiday!!");
             }
-            else { return "No, is not holiday"; }
+            else { return Ok("No, is not holiday"); }
         }
     }
 }
