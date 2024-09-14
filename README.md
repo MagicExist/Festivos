@@ -31,10 +31,6 @@ This is an overloaded method that takes a DateTime as a third parameter instead 
 ####  public static DateTime **GetDateByPascuaSunday**(DataBaseContext,DateTime CustomDate,Festivo)
 Executes a stored procedure that takes a specific date and returns a new date based on Easter Sunday.
 
-## Authors
-
-- [@Johhan Parra](https://github.com/MagicExist)
-- [@Alejandro Berrio](https://github.com/target-id)
 ## Usage/Examples
 
 #### How to check if a custom date is a holiday
@@ -56,4 +52,9 @@ public async Task<bool> IsHoliday(DateTime date)
         
 }
 ```
+
+## Authors
+
+- [@Johhan Parra](https://github.com/MagicExist)
+- [@Alejandro Berrio](https://github.com/target-id)
 
