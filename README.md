@@ -3,6 +3,11 @@
 
 This project, built in a .NET environment using Onion Architecture and T-SQL, provides a set of stored procedures, methods, and endpoints that allow the user to determine if a specific date is a holiday or not.
 
+## DataBase SetUp
+- Go to the Database folder outside the solution project and execute the DDL and DML files.
+
+- Change the default connection string from the appsettings.json file
+
 
 ## API Reference
 
