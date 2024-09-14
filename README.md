@@ -42,7 +42,7 @@ Executes a stored procedure that takes a specific date and returns a new date ba
 public async Task<bool> IsHoliday(DateTime date)
 {
     NextMondayDto? dateResult;
-    _holidayList = dbContext.Festivos.ToArrayAsync(); //Gets the holiday table from the data base
+    _holidayList = await dbContext.Festivos.ToArrayAsync(); //Gets the holiday table from the data base
     foreach(var holiday in _holidayList){
         switch(holiday){
             case 1: break;
